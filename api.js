@@ -309,12 +309,18 @@ flickr.photos.suggestions.suggestLocation*/
 //
 exports["photosets"] = {
 	
-	getInfo: function(params, credentials, cb) { },
+	getInfo: function(params, credentials, cb) { 
+		var reqString = url + "flickr.photosets.getInfo" + getExcluding(params, []);
+		makeRequest(reqString, credentials, cb);
+	},
 	getList: function(params, credentials, cb) {
 		var reqString = url + "flickr.photosets.getList" + getExcluding(params, []);
 		makeRequest(reqString, credentials, cb);	
 	},
-	getPhotos: function(params, credentials, cb) {}
+	getPhotos: function(params, credentials, cb) {
+		var reqString = url + "flickr.photosets.getPhotos" + getExcluding(params, []);
+		makeRequest(reqString, credentials, cb);
+	}
 }
 
 //
