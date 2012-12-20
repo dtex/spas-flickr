@@ -99,6 +99,17 @@ flickr.cameras.getBrands*/
 //
 // ### collections
 //
+exports["collections"] = {
+	
+	getInfo: function(params, credentials, cb) { 
+		var reqString = url + "flickr.collections.getInfo" + getExcluding(params, []);
+		makeRequest(reqString, credentials, cb);
+	},
+	getList: function(params, credentials, cb) {
+		var reqString = url + "flickr.collections.getTree" + getExcluding(params, []);
+		makeRequest(reqString, credentials, cb);	
+	}
+}
 /*flickr.collections.getInfo
 flickr.collections.getTree*/
 
@@ -430,10 +441,9 @@ exports["custom"] = {
 	getPhotosetsWithPhotos: function(params, credentials, cb) { 
 		var reqString = url + "flickr.photosets.getList" + getExcluding(params, []);
 		makeRequest(reqString, credentials, function( err, sets ) {
-
 			var n = sets.photosets.photoset.length;
 			_.each(sets.photosets.photoset, function( obj, key) {
-				reqString = url + "flickr.photosets.getPhotos" + "&api_key=" + params.api_key + "&photoset_id="+obj.id
+				reqString = url + "flickr.photosets.getPhotos" + "&api_key=" + params.api_key + "&photoset_id="+obj.id;
 				makeRequest(reqString, credentials, function( err, photos ) {
 					n = n - 1;
 					sets.photosets.photoset[key].photo = photos.photoset.photo;
@@ -443,6 +453,35 @@ exports["custom"] = {
 				});
 			});
 		});	
-	}
+	},
 	
+	getCollectionsWithPhotos: function(params, credentials, cb) {
+		var reqString = url + "flickr.collections.getTree" + getExcluding(params, []);
+		makeRequest(reqString, credentials, function( err, cols ) {
+
+			var n = cols.collections.collection.length;
+			
+			_.each(cols.collections.collection, function( colObj, colKey) {
+				
+				n = n - 1;
+				n = n + colObj.set.length;
+				
+				_.each(colObj.set, function( setObj, setKey) {
+					
+					reqString = url + "flickr.photosets.getPhotos" + "&api_key=" + params.api_key + "&photoset_id="+setObj.id
+					makeRequest(reqString, credentials, function( err, photos ) {
+						
+						cols.collections.collection[colKey].set[setKey].photo = photos.photoset.photo;
+						n = n - 1;
+						if (n === 0) {
+							cb( null, cols );
+						}
+					});
+				});
+				
+			});
+			
+		});	
+
+	}	
 }
