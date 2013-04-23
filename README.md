@@ -1,7 +1,5 @@
-# Not ready for use
-
-# spas-flickr
-Flickr API desciption for SPAS
+# spas-smugmug
+SmugMug API helpers for SPAS
 
 ## Installation
 
@@ -10,10 +8,10 @@ Flickr API desciption for SPAS
 $ [sudo] npm install little-spas -g
 ```
 
-### Installing spas-flickr
+### Installing spas-smugmug
 ``` bash
-$ [sudo] npm install spas-flickr
+$ [sudo] npm install spas-smugmug
 ```
 
 ## Documentation 
-spas-flickr documentation can be found in the github repository http://dtex.github.com/spas-flickr
+spas-smugmug documentation can be found in the github repository http://dtex.github.com/spas-smugmug

@@ -1,7 +1,7 @@
 {
-  "name": "spas-flickr",
-  "description": "Flickr API desciption for SPAS",
-  "version": "0.0.1",
+  "name": "spas-smugmug",
+  "description": "SmugMug API helpers for SPAS",
+  "version": "0.1.0",
   "author": {
     "name": "Donovan Buck",
     "email": "donovan@donovan.bz",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/dtex/spas-flickr.git"
+    "url": "http://github.com/dtex/spas-smugmug.git"
   },
   "keywords": [
     "spas",
@@ -17,15 +17,16 @@
     "proxy",
     "cache",
     "api",
-    "flickr"
+    "smugmug"
   ],
   "dependencies": {
-    "request": "2.12.0",
-    "underscore": "1.4.3"
+    "request": "2.x.x",
+    "underscore": "1.x.x",
+    "oauth": "0.x.x"
   },
   "main": "./api.js",
   "engines": {
     "node": ">= 0.8.0"
   },
-  "readme": "# spas-flickr\n\nFlickr API desciption for SPAS\n\n## Installation\n\n### Installing little-spas\n``` bash\n$ [sudo] npm install little-spas -g\n```\n\n### Installing spas-flickr\n``` bash\n$ [sudo] npm install spas-flickr\n```\n\n## Documentation spas-flickr documentation can be found at http://dtex.github.com/spas-flickr\n\n"
+  "readme": "# spas-smugmug\n\nSmugMug API helpers for SPAS\n\n## Installation\n\n### Installing little-spas\n``` bash\n$ [sudo] npm install little-spas -g\n```\n\n### Installing spas-smugmug\n``` bash\n$ [sudo] npm install spas-smugmug\n```\n\n## Documentation spas-smugmug documentation can be found at http://dtex.github.com/spas-smugmugr\n\n"
 }
