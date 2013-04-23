@@ -28,5 +28,5 @@
   "engines": {
     "node": ">= 0.8.0"
   },
-  "readme": "# spas-smugmug\n\nSmugMug API helpers for SPAS\n\n## Installation\n\n### Installing little-spas\n``` bash\n$ [sudo] npm install little-spas -g\n```\n\n### Installing spas-smugmug\n``` bash\n$ [sudo] npm install spas-smugmug\n```\n\n## Documentation spas-smugmug documentation can be found at http://dtex.github.com/spas-smugmugr\n\n"
+  "readme": "# spas-flickr\n\nFlickr API helpers for SPAS\n\n## Installation\n\n### Installing little-spas\n``` bash\n$ [sudo] npm install little-spas -g\n```\n\n### Installing spas-flickr\n``` bash\n$ [sudo] npm install spas-flickr\n```\n\n## Documentation spas-flickr documentation can be found at http://dtex.github.com/spas-flickr\n\n"
 }

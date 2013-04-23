@@ -1,5 +1,5 @@
-# spas-smugmug
-SmugMug API helpers for SPAS
+# spas-flickr
+Flickr API helpers for SPAS
 
 ## Installation
 

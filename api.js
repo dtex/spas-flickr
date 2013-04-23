@@ -1,36 +1,118 @@
-var spasRequest = require("../spas-request")
+var 
+	spasRequest = require("../spas-request")
 	, _ = require("underscore")._
-  	, url = "https://api.smugmug.com/services/api/json/1.3.0/?method="
-;
-
+	, url = "http://api.flickr.com/services/rest/?format=json&nojsoncallback=1&method=";
+	
+//
+// ### collections
+//
+exports["collections"] = {
+	
+	getInfo: function(params, credentials, cb) { 
+		params.url = url + "flickr.collections.getInfo";
+		spasRequest.request(params, credentials, cb);
+	},
+	getList: function(params, credentials, cb) {
+		params.url = url + "flickr.collections.getTree";
+		spasRequest.request(params, credentials, cb);	
+	}
+}
 
 //
-// ## Custom - These do not have equivelants in the SmugMug API
+// ### photosets
+//
+exports["photosets"] = {
+	
+	getInfo: function(params, credentials, cb) { 
+		params.url = url + "flickr.photosets.getInfo";
+		spasRequest.request(params, credentials, cb);
+	},
+	getList: function(params, credentials, cb) {
+		params.url = url + "flickr.photosets.getList";
+		spasRequest.request(params, credentials, cb);	
+	},
+	getPhotos: function(params, credentials, cb) {
+		params.url = url + "flickr.photosets.getPhotos";
+		spasRequest.request(params, credentials, cb);
+	}
+}
+
+//
+// ## Custom - These do not have equivelants in the Flickr API
 //
 exports["custom"] = {
 	
-	getAlbumsWithPhotos: function(params, credentials, cb) { 
+	getPhotosetsWithPhotos: function(params, credentials, cb) { 
+		params.url = url + "flickr.photosets.getList";
 		
-		params.url = url + "smugmug.albums.get";
-		
-		spasRequest.request(params, credentials, function( err, albums ) {
-			
-			var n = albums.Albums.length;
-			
-			_.each(albums.Albums, function( obj, key) {
-				
-				params.url = url + "smugmug.images.get" + "&Heavy=true&AlbumID=" + obj.id + "&AlbumKey=" + obj.Key + "&APIKey="+params.APIKey;
-				
-				spasRequest.request(params, credentials, function( err, photos ) {
-					n = n - 1;
-					albums.Albums[key].Images = photos.Album.Images;
-					albums.size += photos.size;
-					if (n === 0) {
-						cb( null, albums );
-					}
+		spasRequest.request(params, credentials, function( err, sets ) {
+			if (!err) {
+
+				var n = sets.photosets.photoset.length;
+				_.each(sets.photosets.photoset, function( obj, key) {
+					params.url = url + "flickr.photosets.getPhotos" + "&api_key=" + params.api_key + "&photoset_id="+obj.id + "&per_page="+params.photosper_page;
+					spasRequest.request({url: params.url}, credentials, function( err, photos ) {
+					
+						n = n - 1;
+						
+						if (err) {
+							obj["error"] = err;
+						} else {
+							if (_.has(photos, 'photoset')) {
+								sets.photosets.photoset[key].photo = photos.photoset.photo;
+								sets.size += photos.size;
+							} else {
+								console.log('photoset missing: ' + params);
+							}
+						}
+						
+						if (n === 0) {
+							cb( null, sets );
+						}
+					});
 				});
-			});
+			} else {
+				var result;
+				try {
+					result = JSON.parse(body);
+				} catch(e) {
+					result = {errnum:1, errtxt:"req failed"}
+				} finally {
+					cb(result );	
+				}
+			}			
 		});	
 	},
 	
+	getCollectionsWithPhotos: function(params, credentials, cb) {
+		params.url = url + "flickr.collections.getTree";
+		spasRequest.request(params, credentials, function( err, cols ) {
+
+			var n = cols.collections.collection.length;
+			
+			_.each(cols.collections.collection, function( colObj, colKey) {
+				
+				n = n - 1;
+				n = n + colObj.set.length;
+				
+				_.each(colObj.set, function( setObj, setKey) {
+					
+					params.url = url + "flickr.photosets.getPhotos" + "&api_key=" + params.api_key + "&photoset_id="+setObj.id
+					spasRequest.request({url: params.url}, credentials, function( err, photos ) {
+						
+						cols.size += photos.size;
+						
+						cols.collections.collection[colKey].set[setKey].photo = photos.photoset.photo;
+						n = n - 1;
+						if (n === 0) {
+							cb( null, cols );
+						}
+					});
+				});
+				
+			});
+			
+		});	
+
+	}	
 }
