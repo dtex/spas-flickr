@@ -1,6 +1,6 @@
 {
-  "name": "spas-smugmug",
-  "description": "SmugMug API helpers for SPAS",
+  "name": "spas-flickr",
+  "description": "Flickr API helpers for SPAS",
   "version": "0.1.0",
   "author": {
     "name": "Donovan Buck",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/dtex/spas-smugmug.git"
+    "url": "http://github.com/dtex/spas-flickr.git"
   },
   "keywords": [
     "spas",
