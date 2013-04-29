@@ -1,5 +1,5 @@
 var 
-	spasRequest = require("../spas-request")
+	spashttp = require("spas-http")
 	, _ = require("underscore")._
 	, url = "http://api.flickr.com/services/rest/?format=json&nojsoncallback=1&method=";
 	
@@ -45,7 +45,7 @@ exports["custom"] = {
 	getPhotosetsWithPhotos: function(params, credentials, cb) { 
 		params.url = url + "flickr.photosets.getList";
 		
-		spasRequest.request(params, credentials, function( err, sets ) {
+		spashttp.request(params, credentials, function( err, sets ) {
 			if (!err) {
 
 				var n = sets.photosets.photoset.length;
