@@ -10,11 +10,11 @@ exports["collections"] = {
 	
 	getInfo: function(params, credentials, cb) { 
 		params.url = url + "flickr.collections.getInfo";
-		spasRequest.request(params, credentials, cb);
+		spashttp.request(params, credentials, cb);
 	},
 	getList: function(params, credentials, cb) {
 		params.url = url + "flickr.collections.getTree";
-		spasRequest.request(params, credentials, cb);	
+		spashttp.request(params, credentials, cb);	
 	}
 }
 
@@ -25,15 +25,15 @@ exports["photosets"] = {
 	
 	getInfo: function(params, credentials, cb) { 
 		params.url = url + "flickr.photosets.getInfo";
-		spasRequest.request(params, credentials, cb);
+		spashttp.request(params, credentials, cb);
 	},
 	getList: function(params, credentials, cb) {
 		params.url = url + "flickr.photosets.getList";
-		spasRequest.request(params, credentials, cb);	
+		spashttp.request(params, credentials, cb);	
 	},
 	getPhotos: function(params, credentials, cb) {
 		params.url = url + "flickr.photosets.getPhotos";
-		spasRequest.request(params, credentials, cb);
+		spashttp.request(params, credentials, cb);
 	}
 }
 
@@ -51,7 +51,7 @@ exports["custom"] = {
 				var n = sets.photosets.photoset.length;
 				_.each(sets.photosets.photoset, function( obj, key) {
 					params.url = url + "flickr.photosets.getPhotos" + "&api_key=" + params.api_key + "&photoset_id="+obj.id + "&per_page="+params.photosper_page;
-					spasRequest.request({url: params.url}, credentials, function( err, photos ) {
+					spashttp.request({url: params.url}, credentials, function( err, photos ) {
 					
 						n = n - 1;
 						
@@ -86,7 +86,7 @@ exports["custom"] = {
 	
 	getCollectionsWithPhotos: function(params, credentials, cb) {
 		params.url = url + "flickr.collections.getTree";
-		spasRequest.request(params, credentials, function( err, cols ) {
+		spashttp.request(params, credentials, function( err, cols ) {
 
 			var n = cols.collections.collection.length;
 			
@@ -98,7 +98,7 @@ exports["custom"] = {
 				_.each(colObj.set, function( setObj, setKey) {
 					
 					params.url = url + "flickr.photosets.getPhotos" + "&api_key=" + params.api_key + "&photoset_id="+setObj.id
-					spasRequest.request({url: params.url}, credentials, function( err, photos ) {
+					spashttp.request({url: params.url}, credentials, function( err, photos ) {
 						
 						cols.size += photos.size;
 						
