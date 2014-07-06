@@ -1,7 +1,7 @@
 var 
 	spashttp = require("spas-http")
 	, _ = require("underscore")._
-	, url = "http://api.flickr.com/services/rest/?format=json&nojsoncallback=1&method=";
+	, url = "https://api.flickr.com/services/rest/?format=json&nojsoncallback=1&method=";
 	
 //
 // ### collections
